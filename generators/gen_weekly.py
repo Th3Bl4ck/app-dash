@@ -124,7 +124,7 @@ def render(a, cfg):
     res = a["res_up"]; sup = a["sup_dn"]
     bull = " → ".join(fmt(v) for v in [a["last"]] + res[:2]) if res else fmt(a["last"])
     bear = " ↓ ".join(fmt(v) for v in ([sup[0]] + sup[1:2]) if sup) or "—"
-    news = "".join(cfg["news"])
+    news = cfg["news"] if isinstance(cfg["news"], str) else "".join(cfg["news"])
     scen = f'''
     <div class="sc {'up' if up else 'range'}"><h3>{ 'Continuazione' if up else 'Rimbalzo / range' }</h3>
       <div class="trig">se {fmt(sup[0]) if sup else '—'} tiene</div><div class="path">{bull}</div></div>
@@ -135,6 +135,7 @@ def render(a, cfg):
     week = f"{cfg['wk_start']}–{cfg['wk_end']}"
     updated = _itdate(TODAY)
     return TEMPLATE.format(
+        news_note=cfg.get("news_note", ""),
         title=cfg["title"], pair=cfg["pair"], ticker=cfg["ticker"], accent=cfg["accent"],
         accent_soft=cfg["accent_soft"], accent_lt=cfg["accent_lt"], accent_soft_lt=cfg["accent_soft_lt"],
         favspot_txt=cfg["spot_col_txt"], week=week, spot=fmt(a["last"],1), cur=cfg.get("cur",""),
@@ -215,8 +216,7 @@ TEMPLATE = r'''<title>{title} — Prep settimana {week} 2026</title>
   <div class="grid">
     <div class="card"><h2><span class="n">◆</span> Scala prezzi &amp; livelli</h2><div class="ladder">{ladder}</div></div>
     <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="card"><h2><span class="n">▤</span> News della settimana</h2>
-        <div class="blackout"><span>🔇</span><div>Verifica gli eventi ad alto impatto della settimana su Investing.com / Financial Juice. Sotto gli appuntamenti ricorrenti.</div></div>
+      <div class="card"><h2><span class="n">▤</span> News della settimana</h2>{news_note}
         <div class="news">{news}</div></div>
       <div class="card"><h2><span class="n">↕</span> Driver &amp; GEX</h2>{driver}
         <div class="gexnote" style="margin-top:12px"><span class="label">Opzioni / GEX</span><br>{gex_html}</div></div>
@@ -228,6 +228,17 @@ TEMPLATE = r'''<title>{title} — Prep settimana {week} 2026</title>
     Rigenerata automaticamente il {updated} · dati live yfinance ({ticker}). GEX: InsiderFinance (best-effort).
   </footer>
 </div>'''
+
+def news_block(week_start, week_end):
+    """Righe evento reali + nota di contesto; se il feed manca, gli appuntamenti ricorrenti."""
+    try:
+        from news_calendar import weekly_block
+        return weekly_block(week_start, week_end, fallback=news_common())
+    except Exception:
+        return "".join(news_common()), (
+            '<div class="blackout"><span>🔇</span><div>Calendario non raggiungibile: '
+            'sotto gli appuntamenti ricorrenti.</div></div>')
+
 
 def news_common():
     return [
@@ -246,17 +257,18 @@ def main():
     xau = analyze(df, "GC=F"); xau["gex"] = gex_levels("GLD", xau["last"])
     spx = analyze(df, "^GSPC"); spx["gex"] = gex_levels("SPX", spx["last"])
 
+    _news, _note = news_block(mon, fri)
     xau_driver = f'<div class="kv"><span class="k">DXY (dollaro)</span><span class="v">{dxy:.2f} <small>corr inversa</small></span></div><div class="kv"><span class="k">US 10Y</span><span class="v">{tnx:.2f}%</span></div>'
     spx_driver = f'<div class="kv"><span class="k">VIX (paura)</span><span class="v">{vix:.2f} <small>corr inversa</small></span></div><div class="kv"><span class="k">US 10Y</span><span class="v">{tnx:.2f}%</span></div>'
 
     open(_XAU := "xau-weekly.html", "w").write(render(xau, dict(
         title="XAU", pair="/USD", ticker="GC=F", cur="$", accent="#c8a24b",
         accent_soft="rgba(200,162,75,.13)", accent_lt="#9d7a2b", accent_soft_lt="rgba(157,122,43,.12)",
-        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=xau_driver, news=news_common())))
+        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=xau_driver, news=_news, news_note=_note)))
     open(_SPX := "spx-weekly.html", "w").write(render(spx, dict(
         title="S&P 500", pair="· SPX500", ticker="^GSPC", cur="", accent="#5b93c4",
         accent_soft="rgba(91,147,196,.14)", accent_lt="#2f6ea5", accent_soft_lt="rgba(47,110,165,.11)",
-        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=spx_driver, news=news_common())))
+        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=spx_driver, news=_news, news_note=_note)))
     print("XAU", round(xau["last"],1), "res", xau["res_up"], "sup", xau["sup_dn"], "gex", xau["gex"])
     print("SPX", round(spx["last"],1), "res", spx["res_up"], "sup", spx["sup_dn"], "gex", spx["gex"])
     print("scritti: xau-weekly.html, spx-weekly.html")

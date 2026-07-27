@@ -112,6 +112,36 @@ def _row(e: dict, with_day: bool) -> str:
             f'<span class="imp {css}">{label}</span></div>')
 
 
+def weekly_block(week_start: dt.date, week_end: dt.date, max_items: int = 5,
+                 fallback: list[str] | None = None) -> tuple[str, str]:
+    """(righe evento, nota) per le dashboard settimanali.
+
+    Il feed copre **solo la settimana in corso** (domenica→sabato). Generando la
+    weekly di domenica — il suo cron — la copertura coincide con la settimana di
+    preparazione: nessuna nota. Negli altri giorni mostra ciò che resta di questa
+    settimana, e la nota lo dichiara per non far credere che siano gli eventi
+    della settimana in testata.
+    """
+    warn = ('<div class="blackout"><span>🔇</span><div>{}</div></div>')
+    events = fetch()
+    now = dt.datetime.now(TZ)
+    nexts = [e for e in (events or []) if e["when"] >= now]
+
+    if not nexts:
+        return "".join(fallback or []), warn.format(
+            "Calendario non raggiungibile: sotto gli appuntamenti ricorrenti. "
+            "Verifica su Investing.com / Financial Juice.")
+
+    shown = nexts[:max_items]
+    rows = "".join(_row(e, with_day=True) for e in shown)
+    in_target = all(week_start <= e["when"].date() <= week_end for e in shown)
+    if in_target:
+        return rows, ""
+    return rows, warn.format(
+        "In arrivo <b>questa</b> settimana: il calendario pubblico copre solo la "
+        "settimana in corso, quello della settimana in esame esce domenica.")
+
+
 def daily_html(max_today: int = 6, max_next: int = 3) -> str:
     """Card 'News di oggi' del daily: eventi odierni o, se non ce ne sono, i prossimi."""
     fallback = ('<div class="blackout">Calendario non raggiungibile ora. '
