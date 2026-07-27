@@ -1,14 +1,14 @@
 name: Rigenera dashboard
 
 # Orari in UTC. Con l'ora legale italiana (UTC+2) corrispondono a
-# 08:00 / 15:15 / 22:30 nei feriali e domenica 20:00 per le settimanali.
+# 08:00 / 15:15 / 22:30 nei feriali e domenica 22:00 per le settimanali.
 # D'inverno (UTC+1) scalano di un'ora: se dà fastidio, si spostano qui.
 on:
   schedule:
     - cron: "0 6 * * 1-5"
     - cron: "15 13 * * 1-5"
     - cron: "30 20 * * 1-5"
-    - cron: "0 18 * * 0"
+    - cron: "0 20 * * 0"
   workflow_dispatch:
 
 permissions:

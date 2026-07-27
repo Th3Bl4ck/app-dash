@@ -31,7 +31,7 @@ niente limiti di dimensione e nessuna funzione Python da mantenere.
 
 ## Orari del cron (UTC nel file, qui in ora italiana estiva)
 - feriali **08:00**, **15:15** (pre-apertura USA), **22:30** (post-chiusura)
-- domenica **20:00** — giro per le settimanali
+- domenica **22:00** — giro per le settimanali
 
 D'inverno scalano di un'ora (i cron GitHub sono in UTC, senza ora legale).
 Si può anche lanciare a mano da GitHub → Actions → *Rigenera dashboard* → *Run workflow*.
