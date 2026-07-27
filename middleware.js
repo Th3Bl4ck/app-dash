@@ -1,7 +1,8 @@
-// Gate password: tutto è protetto tranne login, icone e manifest
-// (questi ultimi devono restare leggibili perché la PWA sia installabile).
+// Gate password: tutto è protetto tranne login, icone, manifest e service worker
+// (questi ultimi devono restare leggibili perché la PWA sia installabile — il sw
+// non espone dati, solo la logica di cache).
 export const config = {
-  matcher: "/((?!icons/|manifest.webmanifest|login|api/login).*)",
+  matcher: "/((?!icons/|manifest.webmanifest|sw.js|login|api/login).*)",
 };
 
 const COOKIE = "dash_auth";
