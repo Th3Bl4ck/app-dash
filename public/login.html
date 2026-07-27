@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Dash — accesso</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0a0a0b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<style>
+  :root{--bg:#0a0a0b;--surface:#151516;--border:#2c2c2f;--text:#ececea;--dim:#9a9a97;--accent:#c8a24b;--down:#d0554f}
+  @media (prefers-color-scheme:light){:root{--bg:#f7f5f0;--surface:#fff;--border:#e2dccd;--text:#241f16;--dim:#6b6353;--accent:#9d7a2b;--down:#bd453f}}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--bg);color:var(--text);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background-image:radial-gradient(120% 90% at 100% 0%,color-mix(in srgb,var(--accent) 13%,transparent),transparent 55%)}
+  form{width:100%;max-width:340px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px 22px}
+  .mark{font-size:30px;text-align:center}
+  h1{margin:10px 0 4px;font-size:19px;text-align:center;letter-spacing:-.01em}
+  p{margin:0 0 20px;text-align:center;font-size:13px;color:var(--dim)}
+  input{width:100%;padding:12px 14px;font-size:16px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg);color:var(--text);font-family:ui-monospace,Menlo,monospace}
+  input:focus{outline:2px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:1px}
+  button{width:100%;margin-top:12px;padding:12px;font-size:15px;font-weight:700;border:0;border-radius:10px;
+    background:var(--accent);color:#0a0a0b;cursor:pointer}
+  button[disabled]{opacity:.6;cursor:default}
+  .err{margin-top:12px;font-size:13px;color:var(--down);text-align:center;min-height:1em}
+</style>
+</head>
+<body>
+<form id="f">
+  <div class="mark">📈</div>
+  <h1>Dash Trading</h1>
+  <p>Area riservata</p>
+  <input id="pw" type="password" placeholder="password" autocomplete="current-password" required autofocus>
+  <button id="go" type="submit">Entra</button>
+  <div class="err" id="err" role="alert"></div>
+</form>
+<script>
+  const f = document.getElementById("f"), pw = document.getElementById("pw");
+  const go = document.getElementById("go"), err = document.getElementById("err");
+
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    err.textContent = ""; go.disabled = true; go.textContent = "Verifico…";
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ password: pw.value }),
+      });
+      if (res.ok) {
+        const next = new URLSearchParams(location.search).get("next");
+        location.replace(next && next.startsWith("/") ? next : "/");
+        return;
+      }
+      err.textContent = res.status === 401 ? "Password errata." : "Errore del server.";
+    } catch {
+      err.textContent = "Rete non disponibile.";
+    }
+    pw.value = ""; pw.focus();
+    go.disabled = false; go.textContent = "Entra";
+  });
+</script>
+</body>
+</html>

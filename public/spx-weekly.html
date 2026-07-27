@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme:dark)">
+<meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme:light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dash">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="icon" href="/icons/icon-192.png">
+<style>
+  body{padding-top:env(safe-area-inset-top)}
+  .appnav{position:sticky;top:0;z-index:50;display:flex;gap:2px;padding:8px 10px;
+    background:color-mix(in srgb,var(--bg,#0a0a0b) 88%,transparent);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border,#2c2c2f);overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .appnav a{flex:0 0 auto;padding:7px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;
+    font:600 12.5px/1 system-ui,-apple-system,sans-serif;color:var(--dim,#9a9a97);border:1px solid transparent}
+  .appnav a[aria-current]{color:var(--accent,#c8a24b);background:var(--accent-soft,rgba(200,162,75,.13));
+    border-color:color-mix(in srgb,var(--accent,#c8a24b) 30%,transparent)}
+  .appnav .stamp{margin-left:auto;flex:0 0 auto;align-self:center;padding-left:10px;
+    font:500 11px/1 ui-monospace,Menlo,monospace;color:var(--faint,#68686a)}
+</style>
+</head>
+<body>
+<nav class="appnav"><a href="/">Oro · oggi</a><a href="/xau-weekly.html">Oro · settimana</a><a href="/spx-weekly.html" aria-current="page">SP500 · settimana</a><span class="stamp">agg. 27/07 11:55</span></nav>
+<title>S&P 500 — Prep settimana 3–7 ago 2026</title>
+<style>
+  :root{--bg:#0a0a0b;--surface:#151516;--surface-2:#1e1e20;--border:#2c2c2f;--text:#ececea;--dim:#9a9a97;--faint:#68686a;
+    --accent:#5b93c4;--accent-soft:rgba(91,147,196,.14);--up:#3fa372;--up-soft:rgba(63,163,114,.14);--down:#d0554f;--down-soft:rgba(208,85,79,.14);--warn:#e0913f;
+    --font-mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;--font-sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+  :root[data-theme="light"]{--bg:#f6f7f9;--surface:#fff;--surface-2:#eef1f4;--border:#dde2e8;--text:#171a1f;--dim:#5f6670;--faint:#98a0ab;
+    --accent:#2f6ea5;--accent-soft:rgba(47,110,165,.11);--up:#2f8a5d;--up-soft:rgba(47,138,93,.12);--down:#bd453f;--down-soft:rgba(189,69,63,.12);--warn:#b26f22;}
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f7f9;--surface:#fff;--surface-2:#eef1f4;--border:#dde2e8;--text:#171a1f;--dim:#5f6670;--faint:#98a0ab;--accent:#2f6ea5;--accent-soft:rgba(47,110,165,.11);--up:#2f8a5d;--down:#bd453f;--warn:#b26f22;}}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.5;-webkit-font-smoothing:antialiased;background-image:radial-gradient(120% 90% at 100% 0%,var(--accent-soft),transparent 55%)}
+  .wrap{max-width:1180px;margin:0 auto;padding:clamp(18px,4vw,40px)}
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .label{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+  h1{font-size:clamp(30px,6vw,52px);margin:.15em 0 0;letter-spacing:-.01em;font-weight:800} h1 .pair{color:var(--dim);font-weight:500}
+  .spotbox{text-align:right} .spot{font-family:var(--font-mono);font-size:clamp(28px,5vw,44px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1} .spot .cur{color:var(--dim);font-size:.5em;margin-right:.35em}
+  .badge{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border-radius:999px;font-family:var(--font-mono);font-size:12px;font-weight:600;letter-spacing:.05em}
+  .badge.up{background:var(--up-soft);color:var(--up);border:1px solid color-mix(in srgb,var(--up) 30%,transparent)}
+  .badge.down{background:var(--down-soft);color:var(--down);border:1px solid color-mix(in srgb,var(--down) 30%,transparent)}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+  .tile{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .tile .v{font-family:var(--font-mono);font-size:clamp(18px,2.4vw,23px);font-weight:700;font-variant-numeric:tabular-nums;margin-top:4px}
+  .tile .sub{font-size:12px;color:var(--dim);margin-top:2px} .neg{color:var(--down)} .pos{color:var(--up)} .amb{color:var(--accent)}
+  .grid{display:grid;grid-template-columns:minmax(300px,1.05fr) 1.4fr;gap:16px;align-items:start}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:13px;font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:0 0 14px;font-weight:600;display:flex;gap:8px} .card h2 .n{color:var(--accent);font-weight:700}
+  .ladder{position:relative;height:560px;margin:6px 4px 0}
+  .band{position:absolute;left:0;right:0;background:var(--accent-soft);border-top:1px dashed color-mix(in srgb,var(--accent) 35%,transparent);border-bottom:1px dashed color-mix(in srgb,var(--accent) 35%,transparent)}
+  .band .btag{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--accent);background:var(--bg);padding:2px 6px;border-radius:6px}
+  .lvl{position:absolute;left:0;right:0;display:flex;align-items:center;gap:8px;transform:translateY(-50%)}
+  .lvl .line{flex:1;height:0;border-top:1.5px solid var(--l);opacity:.9} .lvl.dashed .line{border-top-style:dashed;opacity:.7}
+  .lvl .px{font-family:var(--font-mono);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--l);min-width:58px;text-align:right}
+  .lvl .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+  .lvl.res{--l:var(--down)} .lvl.sup{--l:var(--up)} .lvl.spot{--l:var(--accent);z-index:3}
+  .lvl.spot .line{border-top-width:2px;border-top-style:solid;opacity:1} .lvl.spot .px{font-size:15px;background:var(--accent);color:#0a0a0b;padding:2px 8px;border-radius:6px;min-width:0} .lvl.spot .tag{color:var(--accent);font-weight:700}
+  .news{display:flex;flex-direction:column;gap:2px}
+  .blackout{display:flex;gap:10px;background:var(--surface-2);border:1px dashed var(--border);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13px} .blackout b{color:var(--warn)}
+  .ev{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)} .ev:last-child{border-bottom:0}
+  .ev .day{font-family:var(--font-mono);font-size:12px;color:var(--dim);min-width:74px} .ev .day b{display:block;color:var(--text);font-size:13px}
+  .ev .ttl{font-size:14px;font-weight:600} .ev .ttl small{display:block;font-weight:400;color:var(--dim);font-size:12px;margin-top:1px}
+  .imp{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+  .imp.hi{background:var(--down-soft);color:var(--down)} .imp.md{background:var(--accent-soft);color:var(--accent)} .imp.lo{background:var(--surface-2);color:var(--faint)} .imp.wild{background:var(--down-soft);color:var(--warn)}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)} .kv:last-child{border-bottom:0}
+  .kv .k{font-size:13px;color:var(--dim)} .kv .v{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:600} .kv .v small{color:var(--dim);font-weight:400}
+  .gexnote{font-size:13px;color:var(--dim);line-height:1.55} .gexnote b{color:var(--text)}
+  .scen{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+  .sc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;border-top:3px solid var(--edge)}
+  .sc.up{--edge:var(--up)} .sc.range{--edge:var(--accent)} .sc.down{--edge:var(--down)}
+  .sc h3{margin:0 0 6px;font-size:15px} .sc .trig{font-family:var(--font-mono);font-size:12px;color:var(--dim);margin-bottom:10px}
+  .sc .path{font-family:var(--font-mono);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+  .sc.up .path{color:var(--up)} .sc.range .path{color:var(--accent)} .sc.down .path{color:var(--down)}
+  footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--faint);line-height:1.6}
+  .disc{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:12px;color:var(--dim);font-size:12.5px}
+  @media (max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.scen{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+  <header>
+    <div><div class="eyebrow">Prep settimanale · 3–7 ago 2026</div><h1>S&P 500<span class="pair"> · SPX500</span></h1></div>
+    <div class="spotbox"><div class="label">Spot live · ^GSPC</div><div class="spot"><span class="cur"></span>7.408,3</div><div class="badge up">▲ UPTREND · sopra SMA200</div></div>
+  </header>
+  <section class="tiles">
+    <div class="tile"><div class="label">Prezzo vs SMA200</div><div class="v pos">+5,8%</div><div class="sub">7.002 · trend lungo</div></div>
+    <div class="tile"><div class="label">Range settimana 1σ</div><div class="v amb">7.300–7.517</div><div class="sub">~68% probabilità</div></div>
+    <div class="tile"><div class="label">Volatilità giornaliera</div><div class="v">0,66%</div><div class="sub">~49 pt/giorno</div></div>
+    <div class="tile"><div class="label">Dai massimi 60g</div><div class="v neg">-2,6%</div><div class="sub">7.610</div></div>
+  </section>
+  <div class="grid">
+    <div class="card"><h2><span class="n">◆</span> Scala prezzi &amp; livelli</h2><div class="ladder"><div class="band" style="top:15.0%;height:26.4%"><span class="btag">RANGE 1σ SETTIMANA</span></div><div class="lvl res" style="top:3.7%"><span class="px">7.610</span><span class="line"></span><span class="tag">Resistenza</span></div><div class="lvl res" style="top:9.2%"><span class="px">7.564</span><span class="line"></span><span class="tag">Resistenza</span></div><div class="lvl res" style="top:17.0%"><span class="px">7.501</span><span class="line"></span><span class="tag">Resistenza</span></div><div class="lvl res dashed" style="top:18.7%"><span class="px">7.487</span><span class="line"></span><span class="tag">SMA20</span></div><div class="lvl res dashed" style="top:20.5%"><span class="px">7.472</span><span class="line"></span><span class="tag">SMA50</span></div><div class="lvl sup" style="top:34.9%"><span class="px">7.354</span><span class="line"></span><span class="tag">Supporto</span></div><div class="lvl sup" style="top:45.4%"><span class="px">7.267</span><span class="line"></span><span class="tag">Supporto</span></div><div class="lvl sup dashed" style="top:77.6%"><span class="px">7.002</span><span class="line"></span><span class="tag">SMA200</span></div><div class="lvl sup" style="top:96.7%"><span class="px">6.846</span><span class="line"></span><span class="tag">Supporto</span></div><div class="lvl spot" style="top:28.2%"><span class="px">7.408,3</span><span class="line"></span><span class="tag">◄ SPOT</span></div></div></div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card"><h2><span class="n">▤</span> News della settimana</h2>
+        <div class="blackout"><span>🔇</span><div>Verifica gli eventi ad alto impatto della settimana su Investing.com / Financial Juice. Sotto gli appuntamenti ricorrenti.</div></div>
+        <div class="news"><div class="ev"><div class="day">Gio</div><div class="ttl">Initial Jobless Claims<small>Lavoro USA → tassi → USD</small></div><span class="imp hi">Alto</span></div><div class="ev"><div class="day">Ven</div><div class="ttl">PMI Flash S&amp;P Global<small>Crescita manifattura + servizi</small></div><span class="imp md">Medio</span></div><div class="ev"><div class="day">Tutta sett.</div><div class="ttl">Geopolitica / headline rischio<small>Catalizzatore improvviso</small></div><span class="imp wild">Jolly</span></div></div></div>
+      <div class="card"><h2><span class="n">↕</span> Driver &amp; GEX</h2><div class="kv"><span class="k">VIX (paura)</span><span class="v">17.62 <small>corr inversa</small></span></div><div class="kv"><span class="k">US 10Y</span><span class="v">4.70%</span></div>
+        <div class="gexnote" style="margin-top:12px"><span class="label">Opzioni / GEX</span><br>Feed InsiderFinance <b>non disponibile</b> alla generazione (weekend/endpoint). Ricontrolla <b>/gex</b> sul bot a mercati aperti.</div></div>
+    </div>
+  </div>
+  <div class="scen">
+    <div class="sc up"><h3>Continuazione</h3>
+      <div class="trig">se 7.354 tiene</div><div class="path">7.408 → 7.501 → 7.564</div></div>
+    <div class="sc down"><h3>Rottura ribassista</h3>
+      <div class="trig">chiusura sotto 7.354</div><div class="path">7.354 ↓ 7.267</div></div>
+    <div class="sc range"><h3>Inversione / spinta</h3>
+      <div class="trig">reclaim sopra 7.501</div><div class="path">7.501 ↑ 7.564 ↑ 7.610</div></div></div>
+  <footer>
+    <div class="disc">⚠️ Analisi informativa/educativa — <b>non è consulenza finanziaria</b>. Livelli e scenari sono spunti; l'esecuzione resta tua.</div>
+    Rigenerata automaticamente il 27 lug 2026 · dati live yfinance (^GSPC). GEX: InsiderFinance (best-effort).
+  </footer>
+</div>
+<script>
+if ("serviceWorker" in navigator) {
+  addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+}
+</script>
+</body>
+</html>

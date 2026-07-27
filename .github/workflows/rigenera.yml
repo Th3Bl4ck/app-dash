@@ -1,0 +1,48 @@
+name: Rigenera dashboard
+
+# Orari in UTC. Con l'ora legale italiana (UTC+2) corrispondono a
+# 08:00 / 15:15 / 22:30 nei feriali e domenica 20:00 per le settimanali.
+# D'inverno (UTC+1) scalano di un'ora: se dà fastidio, si spostano qui.
+on:
+  schedule:
+    - cron: "0 6 * * 1-5"
+    - cron: "15 13 * * 1-5"
+    - cron: "30 20 * * 1-5"
+    - cron: "0 18 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rigenera
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installa dipendenze
+        run: pip install -r requirements.txt
+
+      - name: Rigenera le pagine
+        run: python build.py
+
+      - name: Commit se qualcosa è cambiato
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/
+          if git diff --staged --quiet; then
+            echo "nessuna variazione, niente commit"
+          else
+            git commit -m "chore: rigenera dashboard $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

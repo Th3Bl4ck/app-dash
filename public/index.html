@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme:dark)">
+<meta name="theme-color" content="#f7f5f0" media="(prefers-color-scheme:light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dash">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="icon" href="/icons/icon-192.png">
+<style>
+  body{padding-top:env(safe-area-inset-top)}
+  .appnav{position:sticky;top:0;z-index:50;display:flex;gap:2px;padding:8px 10px;
+    background:color-mix(in srgb,var(--bg,#0a0a0b) 88%,transparent);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border,#2c2c2f);overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .appnav a{flex:0 0 auto;padding:7px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;
+    font:600 12.5px/1 system-ui,-apple-system,sans-serif;color:var(--dim,#9a9a97);border:1px solid transparent}
+  .appnav a[aria-current]{color:var(--accent,#c8a24b);background:var(--accent-soft,rgba(200,162,75,.13));
+    border-color:color-mix(in srgb,var(--accent,#c8a24b) 30%,transparent)}
+  .appnav .stamp{margin-left:auto;flex:0 0 auto;align-self:center;padding-left:10px;
+    font:500 11px/1 ui-monospace,Menlo,monospace;color:var(--faint,#68686a)}
+</style>
+</head>
+<body>
+<nav class="appnav"><a href="/" aria-current="page">Oro · oggi</a><a href="/xau-weekly.html">Oro · settimana</a><a href="/spx-weekly.html">SP500 · settimana</a><span class="stamp">agg. 27/07 11:55</span></nav>
+<title>XAU intraday — lunedì 27 lug 2026</title>
+<style>
+  :root{--bg:#0a0a0b;--surface:#151516;--surface-2:#1e1e20;--border:#2c2c2f;--text:#ececea;--dim:#9a9a97;--faint:#68686a;
+    --accent:#c8a24b;--accent-soft:rgba(200,162,75,.13);--up:#3fa372;--up-soft:rgba(63,163,114,.14);--down:#d0554f;--down-soft:rgba(208,85,79,.14);--warn:#e0913f;
+    --font-mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;--font-sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+  :root[data-theme="light"]{--bg:#f7f5f0;--surface:#fff;--surface-2:#f1ede3;--border:#e2dccd;--text:#241f16;--dim:#6b6353;--faint:#9a917f;--accent:#9d7a2b;--accent-soft:rgba(157,122,43,.12);--up:#2f8a5d;--up-soft:rgba(47,138,93,.12);--down:#bd453f;--down-soft:rgba(189,69,63,.12);--warn:#b26f22;}
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f7f5f0;--surface:#fff;--surface-2:#f1ede3;--border:#e2dccd;--text:#241f16;--dim:#6b6353;--faint:#9a917f;--accent:#9d7a2b;--accent-soft:rgba(157,122,43,.12);--up:#2f8a5d;--down:#bd453f;--warn:#b26f22;}}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);line-height:1.5;-webkit-font-smoothing:antialiased;background-image:radial-gradient(120% 90% at 100% 0%,var(--accent-soft),transparent 55%)}
+  .wrap{max-width:1180px;margin:0 auto;padding:clamp(18px,4vw,40px)}
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  .label{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+  h1{font-size:clamp(28px,6vw,48px);margin:.15em 0 0;letter-spacing:-.01em;font-weight:800} h1 .pair{color:var(--dim);font-weight:500}
+  .spotbox{text-align:right} .spot{font-family:var(--font-mono);font-size:clamp(26px,5vw,42px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1} .spot .cur{color:var(--dim);font-size:.5em;margin-right:.3em}
+  .badge{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:4px 10px;border-radius:999px;font-family:var(--font-mono);font-size:12px;font-weight:600}
+  .badge.up{background:var(--up-soft);color:var(--up);border:1px solid color-mix(in srgb,var(--up) 30%,transparent)}
+  .badge.down{background:var(--down-soft);color:var(--down);border:1px solid color-mix(in srgb,var(--down) 30%,transparent)}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}
+  .tile{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .tile .v{font-family:var(--font-mono);font-size:clamp(17px,2.3vw,22px);font-weight:700;font-variant-numeric:tabular-nums;margin-top:4px}
+  .tile .sub{font-size:12px;color:var(--dim);margin-top:2px} .neg{color:var(--down)} .pos{color:var(--up)} .amb{color:var(--accent)}
+  .grid{display:grid;grid-template-columns:minmax(290px,1fr) 1.35fr;gap:16px;align-items:start}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px}
+  .card h2{font-size:13px;font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:0 0 14px;font-weight:600;display:flex;gap:8px} .card h2 .n{color:var(--accent);font-weight:700}
+  .ladder{position:relative;height:520px;margin:6px 4px 0}
+  .band{position:absolute;left:0;right:0;background:var(--accent-soft);border-top:1px dashed color-mix(in srgb,var(--accent) 35%,transparent);border-bottom:1px dashed color-mix(in srgb,var(--accent) 35%,transparent)}
+  .band .btag{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--accent);background:var(--bg);padding:2px 6px;border-radius:6px}
+  .lvl{position:absolute;left:0;right:0;display:flex;align-items:center;gap:8px;transform:translateY(-50%)}
+  .lvl .line{flex:1;height:0;border-top:1.5px solid var(--l);opacity:.9}
+  .lvl .px{font-family:var(--font-mono);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--l);min-width:52px;text-align:right}
+  .lvl .tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+  .lvl.res{--l:var(--down)} .lvl.sup{--l:var(--up)} .lvl.piv{--l:var(--accent)} .lvl.piv .line{border-top-style:dashed}
+  .lvl.spot{--l:var(--accent);z-index:3} .lvl.spot .line{border-top-width:2px} .lvl.spot .px{font-size:15px;background:var(--accent);color:#0a0a0b;padding:2px 8px;border-radius:6px;min-width:0} .lvl.spot .tag{color:var(--accent);font-weight:700}
+  .lvl.piv .px{font-weight:800}
+  .blackout{display:flex;gap:10px;background:var(--surface-2);border:1px dashed var(--border);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--dim)}
+  .kv{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)} .kv:last-child{border-bottom:0}
+  .kv .k{font-size:13px;color:var(--dim)} .kv .v{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:700}
+  .grp{margin-bottom:6px} .grp .lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:10px 0 2px}
+  .gexnote{font-size:12.5px;color:var(--dim);margin-top:8px} .gexnote b{color:var(--text)}
+  .scen{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+  .sc{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;border-top:3px solid var(--edge)}
+  .sc.up{--edge:var(--up)} .sc.range{--edge:var(--accent)} .sc.down{--edge:var(--down)}
+  .sc h3{margin:0 0 6px;font-size:15px} .sc .trig{font-family:var(--font-mono);font-size:12px;color:var(--dim);margin-bottom:10px}
+  .sc .path{font-family:var(--font-mono);font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+  .sc.up .path{color:var(--up)} .sc.range .path{color:var(--accent)} .sc.down .path{color:var(--down)}
+  .hero{margin-top:16px;background:linear-gradient(90deg,var(--accent-soft),transparent);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;padding:14px 16px;font-size:14px} .hero b{font-family:var(--font-mono)}
+  footer{margin-top:24px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--faint);line-height:1.6}
+  .disc{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:12px;color:var(--dim);font-size:12.5px}
+  @media (max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.scen{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+  <header>
+    <div><div class="eyebrow">Intraday · lunedì 27 lug 2026</div><h1>XAU<span class="pair">/USD · giornaliera</span></h1></div>
+    <div class="spotbox"><div class="label">Spot · GC=F</div><div class="spot"><span class="cur">$</span>4.096,1</div><div class="badge up">▲ BIAS LONG · sopra il pivot</div></div>
+  </header>
+  <section class="tiles">
+    <div class="tile"><div class="label">Gap vs ieri</div><div class="v pos">+22,2</div><div class="sub">apertura vs chiusura</div></div>
+    <div class="tile"><div class="label">Range atteso oggi</div><div class="v amb">4.026–4.160</div><div class="sub">open ± ATR (67)</div></div>
+    <div class="tile"><div class="label">Pivot centrale</div><div class="v">4.060</div><div class="sub">prezzo sopra il pivot</div></div>
+    <div class="tile"><div class="label">Ieri (PDH / PDL)</div><div class="v">4.085<span style="color:var(--dim)"> / </span>4.024</div><div class="sub">chiusura 4.071</div></div>
+  </section>
+  <div class="grid">
+    <div class="card"><h2><span class="n">◆</span> Livelli intraday</h2><div class="ladder"><div class="band" style="top:4.7%;height:75.5%"><span class="btag">RANGE ATTESO (ATR)</span></div><div class="lvl res" style="top:26.6%"><span class="px">4.121</span><span class="line"></span><span class="tag">R2</span></div><div class="lvl res" style="top:40.8%"><span class="px">4.096</span><span class="line"></span><span class="tag">R1</span></div><div class="lvl res" style="top:46.8%"><span class="px">4.085</span><span class="line"></span><span class="tag">PDH · rottura</span></div><div class="lvl piv" style="top:61.0%"><span class="px">4.060</span><span class="line"></span><span class="tag">Pivot PP</span></div><div class="lvl sup" style="top:75.2%"><span class="px">4.035</span><span class="line"></span><span class="tag">S1</span></div><div class="lvl sup" style="top:81.3%"><span class="px">4.024</span><span class="line"></span><span class="tag">PDL · rottura</span></div><div class="lvl sup" style="top:95.5%"><span class="px">3.999</span><span class="line"></span><span class="tag">S2</span></div><div class="lvl spot" style="top:40.7%"><span class="px">4.096,1</span><span class="line"></span><span class="tag">◄ SPOT</span></div></div></div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="card"><h2><span class="n">▤</span> News di oggi</h2>
+        <div class="blackout">Controlla gli eventi ad alto impatto di <b>oggi</b> su Investing.com / Financial Juice (CPI, Fed, dati lavoro). Nei giorni senza dati, comanda il flusso tecnico + GEX.</div></div>
+      <div class="card"><h2><span class="n">▚</span> Mappa livelli</h2>
+        <div class="grp"><div class="lab">Opzioni (GEX)</div><div class="kv"><span class="k">Call / Put Wall</span><span class="v" style="color:var(--dim)">n/d</span></div></div>
+        <div class="grp"><div class="lab">Rottura (breakout)</div>
+          <div class="kv"><span class="k">PDH · massimo ieri</span><span class="v" style="color:var(--down)">4.085</span></div>
+          <div class="kv"><span class="k">PDL · minimo ieri</span><span class="v" style="color:var(--up)">4.024</span></div></div>
+        <div class="grp"><div class="lab">Range (pivot)</div>
+          <div class="kv"><span class="k">R2 / R1</span><span class="v">4.121 / 4.096</span></div>
+          <div class="kv"><span class="k">Pivot PP</span><span class="v" style="color:var(--accent)">4.060</span></div>
+          <div class="kv"><span class="k">S1 / S2</span><span class="v">4.035 / 3.999</span></div></div>
+        <div class="gexnote">Feed InsiderFinance <b>non disponibile</b> ora. Ricontrolla /gex a mercati aperti.</div></div>
+    </div>
+  </div>
+  <div class="hero">🎯 <b>Bias del giorno vs pivot 4.060.</b> Trigger di rottura: <b>4.085</b> (sopra = spinta) / <b>4.024</b> (sotto = scarico). Dentro il range atteso 4.026–4.160 favorito il gioco mean-revert sui pivot.</div>
+  <div class="scen">
+    <div class="sc up"><h3>Breakout long</h3><div class="trig">sopra PDH 4.085</div><div class="path">4.085 → 4.096 → 4.121</div></div>
+    <div class="sc range"><h3>Range</h3><div class="trig">tra S1 e R1 attorno al pivot</div><div class="path">4.035 ⇄ 4.096</div></div>
+    <div class="sc down"><h3>Breakdown</h3><div class="trig">sotto PDL 4.024</div><div class="path">4.024 → 4.035 → 3.999</div></div>
+  </div>
+  <footer>
+    <div class="disc">⚠️ Analisi informativa/educativa — <b>non è consulenza finanziaria</b>. Livelli e scenari sono spunti; l'esecuzione e il rischio restano tuoi.</div>
+    Rigenerata automaticamente il lunedì 27 lug 2026 · dati live yfinance (GC=F, daily+5m). Pivot floor-trader dalla sessione precedente. GEX: InsiderFinance (best-effort).
+  </footer>
+</div>
+<script>
+if ("serviceWorker" in navigator) {
+  addEventListener("load", () => navigator.serviceWorker.register("/sw.js"));
+}
+</script>
+</body>
+</html>
