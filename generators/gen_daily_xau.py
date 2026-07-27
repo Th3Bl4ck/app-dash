@@ -18,11 +18,20 @@ def _itdate(d): return f"{_GIORNI[d.weekday()]} {d.day} {_MESI[d.month-1]} {d.ye
 def fmt(v, dec=0):
     return f"{v:,.{dec}f}".replace(",", "§").replace(".", ",").replace("§", ".")
 
+def _ssl_ctx():
+    """Il Python del Mac non ha i certificati di sistema: usa quelli di certifi."""
+    import ssl
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        return ssl.create_default_context()
+
 def gex_levels(ticker):
     url = f"https://cf.insiderfinance.io/v1/gex?ticker={ticker}"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        obj = json.loads(urllib.request.urlopen(req, timeout=15).read().decode())
+        obj = json.loads(urllib.request.urlopen(req, timeout=15, context=_ssl_ctx()).read().decode())
         opts = obj.get("options", [])
         if not opts: return None
         agg = {}
@@ -112,6 +121,16 @@ def ladder(a):
     rows.append(f'<div class="lvl spot" style="top:{top(spot):.1f}%"><span class="px">{fmt(spot,1)}</span><span class="line"></span><span class="tag">◄ SPOT</span></div>')
     return band+"".join(rows)
 
+def news_html():
+    """Card news di oggi. Se il modulo o il feed mancano, resta il promemoria statico."""
+    try:
+        from news_calendar import daily_html
+        return daily_html()
+    except Exception:
+        return ('<div class="blackout">Controlla gli eventi ad alto impatto di <b>oggi</b> su '
+                'Investing.com / Financial Juice (CPI, Fed, dati lavoro). Nei giorni senza dati, '
+                'comanda il flusso tecnico + GEX.</div>')
+
 def main():
     a=analyze()
     up = a["spot"]>=a["PP"]
@@ -131,7 +150,7 @@ def main():
         pp=fmt(a["PP"]), pos=("sopra" if up else "sotto"),
         pdh=fmt(a["PDH"]), pdl=fmt(a["PDL"]), pdc=fmt(a["PDC"]),
         r1=fmt(a["R1"]), r2=fmt(a["R2"]), s1=fmt(a["S1"]), s2=fmt(a["S2"]),
-        ladder=ladder(a), gexrows=gexrows, gexnote=gexnote,
+        ladder=ladder(a), gexrows=gexrows, gexnote=gexnote, news=news_html(),
         bull=f'{fmt(a["PDH"])} → {fmt(a["R1"])} → {fmt(a["R2"])}',
         bear=f'{fmt(a["PDL"])} → {fmt(a["S1"])} → {fmt(a["S2"])}',
         rng=f'{fmt(a["S1"])} ⇄ {fmt(a["R1"])}')
@@ -174,7 +193,13 @@ TEMPLATE = r'''<title>XAU intraday — {updated}</title>
   .lvl.res{{--l:var(--down)}} .lvl.sup{{--l:var(--up)}} .lvl.piv{{--l:var(--accent)}} .lvl.piv .line{{border-top-style:dashed}}
   .lvl.spot{{--l:var(--accent);z-index:3}} .lvl.spot .line{{border-top-width:2px}} .lvl.spot .px{{font-size:15px;background:var(--accent);color:#0a0a0b;padding:2px 8px;border-radius:6px;min-width:0}} .lvl.spot .tag{{color:var(--accent);font-weight:700}}
   .lvl.piv .px{{font-weight:800}}
-  .blackout{{display:flex;gap:10px;background:var(--surface-2);border:1px dashed var(--border);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--dim)}}
+  .blackout{{background:var(--surface-2);border:1px dashed var(--border);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--dim)}}
+  .ev{{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)}} .ev:last-child{{border-bottom:0}}
+  .ev .day{{font-family:var(--font-mono);font-size:12px;color:var(--dim);min-width:58px}} .ev .day b{{color:var(--text);font-size:13px}}
+  .ev .ttl{{font-size:14px;font-weight:600}} .ev .ttl small{{display:block;font-weight:400;color:var(--dim);font-size:12px;margin-top:1px}}
+  .imp{{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap}}
+  .imp.hi{{background:var(--down-soft);color:var(--down)}} .imp.md{{background:var(--accent-soft);color:var(--accent)}} .imp.lo{{background:var(--surface-2);color:var(--faint)}}
+  .blackout + .ev{{margin-top:4px}}
   .kv{{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}} .kv:last-child{{border-bottom:0}}
   .kv .k{{font-size:13px;color:var(--dim)}} .kv .v{{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:700}}
   .grp{{margin-bottom:6px}} .grp .lab{{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:10px 0 2px}}
@@ -204,8 +229,7 @@ TEMPLATE = r'''<title>XAU intraday — {updated}</title>
   <div class="grid">
     <div class="card"><h2><span class="n">◆</span> Livelli intraday</h2><div class="ladder">{ladder}</div></div>
     <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="card"><h2><span class="n">▤</span> News di oggi</h2>
-        <div class="blackout">Controlla gli eventi ad alto impatto di <b>oggi</b> su Investing.com / Financial Juice (CPI, Fed, dati lavoro). Nei giorni senza dati, comanda il flusso tecnico + GEX.</div></div>
+      <div class="card"><h2><span class="n">▤</span> News di oggi</h2>{news}</div>
       <div class="card"><h2><span class="n">▚</span> Mappa livelli</h2>
         <div class="grp"><div class="lab">Opzioni (GEX)</div>{gexrows}</div>
         <div class="grp"><div class="lab">Rottura (breakout)</div>

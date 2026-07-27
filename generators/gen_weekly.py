@@ -35,12 +35,21 @@ def swings(x: pd.Series, lb=5, gap_pct=0.006):
         return o
     return clust(res), clust(sup)
 
+def _ssl_ctx():
+    """Il Python del Mac non ha i certificati di sistema: usa quelli di certifi."""
+    import ssl
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except Exception:
+        return ssl.create_default_context()
+
 def gex_levels(ticker, spot):
     """Best-effort GEX da InsiderFinance. Ritorna dict o None se non disponibile."""
     url = f"https://cf.insiderfinance.io/v1/gex?ticker={ticker}"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        raw = urllib.request.urlopen(req, timeout=15).read().decode()
+        raw = urllib.request.urlopen(req, timeout=15, context=_ssl_ctx()).read().decode()
         obj = json.loads(raw)
         opts = obj.get("options", [])
         if not opts:

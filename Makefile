@@ -3,7 +3,7 @@ SRC := ../app-trading/scripts/dashboards
 .PHONY: sync build icons serve
 
 sync:            ## riallinea i generatori dalla fonte di verità (app-trading)
-	cp $(SRC)/gen_daily_xau.py $(SRC)/gen_weekly.py generators/
+	cp $(SRC)/gen_daily_xau.py $(SRC)/gen_weekly.py $(SRC)/news_calendar.py generators/
 	@echo "generatori risincronizzati da $(SRC)"
 
 build:           ## rigenera public/
