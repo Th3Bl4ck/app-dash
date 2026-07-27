@@ -12,8 +12,12 @@
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <link rel="icon" href="/icons/icon-192.png">
 <style>
-  body{padding-top:env(safe-area-inset-top)}
-  .appnav{position:sticky;top:0;z-index:50;display:flex;gap:2px;padding:8px 10px;
+  /* barra ancorata: fixed + spazio riservato sul body, così non balla
+     durante il rubber-band di iOS */
+  :root{--navh:46px}
+  body{padding-top:calc(var(--navh) + env(safe-area-inset-top))}
+  .appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;gap:2px;
+    padding:calc(8px + env(safe-area-inset-top)) 10px 8px;
     background:color-mix(in srgb,var(--bg,#0a0a0b) 88%,transparent);backdrop-filter:blur(12px);
     border-bottom:1px solid var(--border,#2c2c2f);overflow-x:auto;-webkit-overflow-scrolling:touch}
   .appnav a{flex:0 0 auto;padding:7px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;
@@ -25,7 +29,7 @@
 </style>
 </head>
 <body>
-<nav class="appnav"><a href="/">Oro · oggi</a><a href="/xau-weekly.html">Oro · settimana</a><a href="/spx-weekly.html" aria-current="page">SP500 · settimana</a><span class="stamp">agg. 27/07 12:10</span></nav>
+<nav class="appnav"><a href="/">Oro · oggi</a><a href="/xau-weekly.html">Oro · settimana</a><a href="/spx-weekly.html" aria-current="page">SP500 · settimana</a><span class="stamp">agg. 27/07 12:50</span></nav>
 <title>S&P 500 — Prep settimana 3–7 ago 2026</title>
 <style>
   :root{--bg:#0a0a0b;--surface:#151516;--surface-2:#1e1e20;--border:#2c2c2f;--text:#ececea;--dim:#9a9a97;--faint:#68686a;
@@ -98,7 +102,7 @@
       <div class="card"><h2><span class="n">▤</span> News della settimana</h2>
         <div class="blackout"><span>🔇</span><div>Verifica gli eventi ad alto impatto della settimana su Investing.com / Financial Juice. Sotto gli appuntamenti ricorrenti.</div></div>
         <div class="news"><div class="ev"><div class="day">Gio</div><div class="ttl">Initial Jobless Claims<small>Lavoro USA → tassi → USD</small></div><span class="imp hi">Alto</span></div><div class="ev"><div class="day">Ven</div><div class="ttl">PMI Flash S&amp;P Global<small>Crescita manifattura + servizi</small></div><span class="imp md">Medio</span></div><div class="ev"><div class="day">Tutta sett.</div><div class="ttl">Geopolitica / headline rischio<small>Catalizzatore improvviso</small></div><span class="imp wild">Jolly</span></div></div></div>
-      <div class="card"><h2><span class="n">↕</span> Driver &amp; GEX</h2><div class="kv"><span class="k">VIX (paura)</span><span class="v">17.57 <small>corr inversa</small></span></div><div class="kv"><span class="k">US 10Y</span><span class="v">4.70%</span></div>
+      <div class="card"><h2><span class="n">↕</span> Driver &amp; GEX</h2><div class="kv"><span class="k">VIX (paura)</span><span class="v">17.59 <small>corr inversa</small></span></div><div class="kv"><span class="k">US 10Y</span><span class="v">4.70%</span></div>
         <div class="gexnote" style="margin-top:12px"><span class="label">Opzioni / GEX</span><br>Feed InsiderFinance <b>non disponibile</b> alla generazione (weekend/endpoint). Ricontrolla <b>/gex</b> sul bot a mercati aperti.</div></div>
     </div>
   </div>

@@ -34,8 +34,12 @@ HEAD = """<!doctype html>
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <link rel="icon" href="/icons/icon-192.png">
 <style>
-  body{padding-top:env(safe-area-inset-top)}
-  .appnav{position:sticky;top:0;z-index:50;display:flex;gap:2px;padding:8px 10px;
+  /* barra ancorata: fixed + spazio riservato sul body, così non balla
+     durante il rubber-band di iOS */
+  :root{--navh:46px}
+  body{padding-top:calc(var(--navh) + env(safe-area-inset-top))}
+  .appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;gap:2px;
+    padding:calc(8px + env(safe-area-inset-top)) 10px 8px;
     background:color-mix(in srgb,var(--bg,#0a0a0b) 88%,transparent);backdrop-filter:blur(12px);
     border-bottom:1px solid var(--border,#2c2c2f);overflow-x:auto;-webkit-overflow-scrolling:touch}
   .appnav a{flex:0 0 auto;padding:7px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;

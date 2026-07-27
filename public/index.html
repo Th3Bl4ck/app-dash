@@ -12,8 +12,12 @@
 <link rel="apple-touch-icon" href="/icons/icon-180.png">
 <link rel="icon" href="/icons/icon-192.png">
 <style>
-  body{padding-top:env(safe-area-inset-top)}
-  .appnav{position:sticky;top:0;z-index:50;display:flex;gap:2px;padding:8px 10px;
+  /* barra ancorata: fixed + spazio riservato sul body, così non balla
+     durante il rubber-band di iOS */
+  :root{--navh:46px}
+  body{padding-top:calc(var(--navh) + env(safe-area-inset-top))}
+  .appnav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;gap:2px;
+    padding:calc(8px + env(safe-area-inset-top)) 10px 8px;
     background:color-mix(in srgb,var(--bg,#0a0a0b) 88%,transparent);backdrop-filter:blur(12px);
     border-bottom:1px solid var(--border,#2c2c2f);overflow-x:auto;-webkit-overflow-scrolling:touch}
   .appnav a{flex:0 0 auto;padding:7px 13px;border-radius:999px;text-decoration:none;white-space:nowrap;
@@ -25,7 +29,7 @@
 </style>
 </head>
 <body>
-<nav class="appnav"><a href="/" aria-current="page">Oro · oggi</a><a href="/xau-weekly.html">Oro · settimana</a><a href="/spx-weekly.html">SP500 · settimana</a><span class="stamp">agg. 27/07 12:10</span></nav>
+<nav class="appnav"><a href="/" aria-current="page">Oro · oggi</a><a href="/xau-weekly.html">Oro · settimana</a><a href="/spx-weekly.html">SP500 · settimana</a><span class="stamp">agg. 27/07 12:50</span></nav>
 <title>XAU intraday — lunedì 27 lug 2026</title>
 <style>
   :root{--bg:#0a0a0b;--surface:#151516;--surface-2:#1e1e20;--border:#2c2c2f;--text:#ececea;--dim:#9a9a97;--faint:#68686a;
@@ -80,7 +84,7 @@
 <div class="wrap">
   <header>
     <div><div class="eyebrow">Intraday · lunedì 27 lug 2026</div><h1>XAU<span class="pair">/USD · giornaliera</span></h1></div>
-    <div class="spotbox"><div class="label">Spot · GC=F</div><div class="spot"><span class="cur">$</span>4.098,4</div><div class="badge up">▲ BIAS LONG · sopra il pivot</div></div>
+    <div class="spotbox"><div class="label">Spot · GC=F</div><div class="spot"><span class="cur">$</span>4.100,4</div><div class="badge up">▲ BIAS LONG · sopra il pivot</div></div>
   </header>
   <section class="tiles">
     <div class="tile"><div class="label">Gap vs ieri</div><div class="v pos">+22,2</div><div class="sub">apertura vs chiusura</div></div>
@@ -89,7 +93,7 @@
     <div class="tile"><div class="label">Ieri (PDH / PDL)</div><div class="v">4.085<span style="color:var(--dim)"> / </span>4.024</div><div class="sub">chiusura 4.071</div></div>
   </section>
   <div class="grid">
-    <div class="card"><h2><span class="n">◆</span> Livelli intraday</h2><div class="ladder"><div class="band" style="top:4.7%;height:75.5%"><span class="btag">RANGE ATTESO (ATR)</span></div><div class="lvl res" style="top:26.6%"><span class="px">4.121</span><span class="line"></span><span class="tag">R2</span></div><div class="lvl res" style="top:40.8%"><span class="px">4.096</span><span class="line"></span><span class="tag">R1</span></div><div class="lvl res" style="top:46.8%"><span class="px">4.085</span><span class="line"></span><span class="tag">PDH · rottura</span></div><div class="lvl piv" style="top:61.0%"><span class="px">4.060</span><span class="line"></span><span class="tag">Pivot PP</span></div><div class="lvl sup" style="top:75.2%"><span class="px">4.035</span><span class="line"></span><span class="tag">S1</span></div><div class="lvl sup" style="top:81.3%"><span class="px">4.024</span><span class="line"></span><span class="tag">PDL · rottura</span></div><div class="lvl sup" style="top:95.5%"><span class="px">3.999</span><span class="line"></span><span class="tag">S2</span></div><div class="lvl spot" style="top:39.4%"><span class="px">4.098,4</span><span class="line"></span><span class="tag">◄ SPOT</span></div></div></div>
+    <div class="card"><h2><span class="n">◆</span> Livelli intraday</h2><div class="ladder"><div class="band" style="top:4.7%;height:75.5%"><span class="btag">RANGE ATTESO (ATR)</span></div><div class="lvl res" style="top:26.6%"><span class="px">4.121</span><span class="line"></span><span class="tag">R2</span></div><div class="lvl res" style="top:40.8%"><span class="px">4.096</span><span class="line"></span><span class="tag">R1</span></div><div class="lvl res" style="top:46.8%"><span class="px">4.085</span><span class="line"></span><span class="tag">PDH · rottura</span></div><div class="lvl piv" style="top:61.0%"><span class="px">4.060</span><span class="line"></span><span class="tag">Pivot PP</span></div><div class="lvl sup" style="top:75.2%"><span class="px">4.035</span><span class="line"></span><span class="tag">S1</span></div><div class="lvl sup" style="top:81.3%"><span class="px">4.024</span><span class="line"></span><span class="tag">PDL · rottura</span></div><div class="lvl sup" style="top:95.5%"><span class="px">3.999</span><span class="line"></span><span class="tag">S2</span></div><div class="lvl spot" style="top:38.3%"><span class="px">4.100,4</span><span class="line"></span><span class="tag">◄ SPOT</span></div></div></div>
     <div style="display:flex;flex-direction:column;gap:16px">
       <div class="card"><h2><span class="n">▤</span> News di oggi</h2>
         <div class="blackout">Controlla gli eventi ad alto impatto di <b>oggi</b> su Investing.com / Financial Juice (CPI, Fed, dati lavoro). Nei giorni senza dati, comanda il flusso tecnico + GEX.</div></div>
