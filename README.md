@@ -1,5 +1,8 @@
 # app-dash
 
+**Online: https://app-dash-gamma.vercel.app** (protetta da password) ·
+repo: `Th3Bl4ck/app-dash` (privato) · progetto Vercel: `app-dash`
+
 PWA installabile (icona in schermata Home, fullscreen, iOS + Android) con le
 dashboard di trading XAU / SP500, che si rigenera da sola.
 
