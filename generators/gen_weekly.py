@@ -135,7 +135,8 @@ def render(a, cfg):
     week = f"{cfg['wk_start']}–{cfg['wk_end']}"
     updated = _itdate(TODAY)
     return TEMPLATE.format(
-        news_note=cfg.get("news_note", ""),
+        news_note=cfg.get("news_note", ""), eyebrow=cfg.get("eyebrow", "Settimana"),
+        eyebrow_long=("Settimana in corso" if cfg.get("eyebrow") == "Settimana" else "Prep settimanale"),
         title=cfg["title"], pair=cfg["pair"], ticker=cfg["ticker"], accent=cfg["accent"],
         accent_soft=cfg["accent_soft"], accent_lt=cfg["accent_lt"], accent_soft_lt=cfg["accent_soft_lt"],
         favspot_txt=cfg["spot_col_txt"], week=week, spot=fmt(a["last"],1), cur=cfg.get("cur",""),
@@ -147,7 +148,7 @@ def render(a, cfg):
         ladder=ladder_html(a), news=news, gex_html=gex_html, driver=cfg["driver"],
         scen=scen, updated=updated)
 
-TEMPLATE = r'''<title>{title} — Prep settimana {week} 2026</title>
+TEMPLATE = r'''<title>{title} — {eyebrow} {week} 2026</title>
 <style>
   :root{{--bg:#0a0a0b;--surface:#151516;--surface-2:#1e1e20;--border:#2c2c2f;--text:#ececea;--dim:#9a9a97;--faint:#68686a;
     --accent:{accent};--accent-soft:{accent_soft};--up:#3fa372;--up-soft:rgba(63,163,114,.14);--down:#d0554f;--down-soft:rgba(208,85,79,.14);--warn:#e0913f;
@@ -204,7 +205,7 @@ TEMPLATE = r'''<title>{title} — Prep settimana {week} 2026</title>
 </style>
 <div class="wrap">
   <header>
-    <div><div class="eyebrow">Prep settimanale · {week} 2026</div><h1>{title}<span class="pair"> {pair}</span></h1></div>
+    <div><div class="eyebrow">{eyebrow_long} · {week} 2026</div><h1>{title}<span class="pair"> {pair}</span></h1></div>
     <div class="spotbox"><div class="label">Spot live · {ticker}</div><div class="spot"><span class="cur">{cur}</span>{spot}</div><div class="badge {badge_cls}">{badge}</div></div>
   </header>
   <section class="tiles">
@@ -250,7 +251,15 @@ def news_common():
 def main():
     df = dl(["GC=F", "^GSPC", "DX-Y.NYB", "^VIX", "^TNX"])
     dxy = float(df["DX-Y.NYB"].dropna().iloc[-1]); vix = float(df["^VIX"].dropna().iloc[-1]); tnx = float(df["^TNX"].dropna().iloc[-1])
-    mon = TODAY + dt.timedelta(days=(7 - TODAY.weekday()) % 7 or 7)
+    # Nei feriali la dash parla della settimana in corso; nel weekend prepara
+    # quella entrante (era sempre "la prossima": di lunedì mostrava già la
+    # settimana dopo, mentre i livelli sotto erano calcolati su oggi).
+    if TODAY.weekday() <= 4:
+        mon = TODAY - dt.timedelta(days=TODAY.weekday())
+        eyebrow = "Settimana"
+    else:
+        mon = TODAY + dt.timedelta(days=7 - TODAY.weekday())
+        eyebrow = "Prep settimanale"
     fri = mon + dt.timedelta(days=4)
     wk_start = str(mon.day); wk_end = f"{fri.day} {_MESI[fri.month-1]}"
 
@@ -264,11 +273,11 @@ def main():
     open(_XAU := "xau-weekly.html", "w").write(render(xau, dict(
         title="XAU", pair="/USD", ticker="GC=F", cur="$", accent="#c8a24b",
         accent_soft="rgba(200,162,75,.13)", accent_lt="#9d7a2b", accent_soft_lt="rgba(157,122,43,.12)",
-        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=xau_driver, news=_news, news_note=_note)))
+        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=xau_driver, news=_news, news_note=_note, eyebrow=eyebrow)))
     open(_SPX := "spx-weekly.html", "w").write(render(spx, dict(
         title="S&P 500", pair="· SPX500", ticker="^GSPC", cur="", accent="#5b93c4",
         accent_soft="rgba(91,147,196,.14)", accent_lt="#2f6ea5", accent_soft_lt="rgba(47,110,165,.11)",
-        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=spx_driver, news=_news, news_note=_note)))
+        spot_col_txt="#0a0a0b", wk_start=wk_start, wk_end=wk_end, driver=spx_driver, news=_news, news_note=_note, eyebrow=eyebrow)))
     print("XAU", round(xau["last"],1), "res", xau["res_up"], "sup", xau["sup_dn"], "gex", xau["gex"])
     print("SPX", round(spx["last"],1), "res", spx["res_up"], "sup", spx["sup_dn"], "gex", spx["gex"])
     print("scritti: xau-weekly.html, spx-weekly.html")
