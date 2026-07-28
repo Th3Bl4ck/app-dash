@@ -30,8 +30,12 @@ niente limiti di dimensione e nessuna funzione Python da mantenere.
 - `.github/workflows/rigenera.yml` — il cron.
 
 ## Orari del cron (UTC nel file, qui in ora italiana estiva)
-- feriali **08:00**, **15:15** (pre-apertura USA), **22:30** (post-chiusura)
-- domenica **22:00** — giro per le settimanali
+- feriali **~07:40**, **~14:55** (pre-apertura USA), **~22:10** (post-chiusura)
+- domenica **~21:40** — giro per le settimanali
+
+Sono anticipati di ~20 min e su minuti sparsi: i cron di GitHub Actions non
+sono garantiti e agli orari tondi slittano (il 27/07 un giro è partito con
+2h35m di ritardo). L'anticipo assorbe il ritardo residuo.
 
 D'inverno scalano di un'ora (i cron GitHub sono in UTC, senza ora legale).
 Si può anche lanciare a mano da GitHub → Actions → *Rigenera dashboard* → *Run workflow*.

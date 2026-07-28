@@ -1,14 +1,20 @@
 name: Rigenera dashboard
 
-# Orari in UTC. Con l'ora legale italiana (UTC+2) corrispondono a
-# 08:00 / 15:15 / 22:30 nei feriali e domenica 22:00 per le settimanali.
+# Orari in UTC. Con l'ora legale italiana (UTC+2) puntano a essere pronte per
+# le 08:00 / 15:15 / 22:30 nei feriali e domenica alle 22:00.
+#
+# Sono anticipati di ~20 minuti e su minuti sparsi di proposito: i cron di
+# GitHub Actions non sono garantiti e agli orari tondi (le 06:00 UTC in testa)
+# la coda è lunga — il 27/07 il giro delle 15:15 è partito con 2h35m di
+# ritardo. L'anticipo assorbe lo slittamento residuo.
+#
 # D'inverno (UTC+1) scalano di un'ora: se dà fastidio, si spostano qui.
 on:
   schedule:
-    - cron: "0 6 * * 1-5"
-    - cron: "15 13 * * 1-5"
-    - cron: "30 20 * * 1-5"
-    - cron: "0 20 * * 0"
+    - cron: "38 5 * * 1-5"
+    - cron: "53 12 * * 1-5"
+    - cron: "08 20 * * 1-5"
+    - cron: "37 19 * * 0"
   workflow_dispatch:
 
 permissions:
