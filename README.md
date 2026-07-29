@@ -1,7 +1,7 @@
 # app-dash
 
 **Online: https://app-dash-gamma.vercel.app** (protetta da password) ·
-repo: `Th3Bl4ck/app-dash` (privato) · progetto Vercel: `app-dash`
+repo: `Th3Bl4ck/app-dash` (pubblico — vedi nota sui cron) · progetto Vercel: `app-dash`
 
 PWA installabile (icona in schermata Home, fullscreen, iOS + Android) con le
 dashboard di trading XAU / SP500, che si rigenera da sola.
@@ -30,13 +30,10 @@ niente limiti di dimensione e nessuna funzione Python da mantenere.
 - `.github/workflows/rigenera.yml` — il cron.
 
 ## Orari del cron (UTC nel file, qui in ora italiana estiva)
-- feriali **~07:40**, **~14:55** (pre-apertura USA), **~22:10** (post-chiusura)
-- domenica **~21:40** — giro per le settimanali
+- feriali **07:57**, **15:12** (pre-apertura USA), **22:27** (post-chiusura)
+- domenica **21:57** — giro per le settimanali
 
-Sono anticipati di ~20 min e su minuti sparsi: i cron di GitHub Actions non
-sono garantiti e agli orari tondi slittano (il 27/07 un giro è partito con
-2h35m di ritardo). L'anticipo assorbe il ritardo residuo.
-
+Minuti sparsi di proposito (agli orari tondi la coda GitHub è più lunga).
 D'inverno scalano di un'ora (i cron GitHub sono in UTC, senza ora legale).
 Si può anche lanciare a mano da GitHub → Actions → *Rigenera dashboard* → *Run workflow*.
 
