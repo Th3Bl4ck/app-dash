@@ -1,8 +1,8 @@
 // Gate password: tutto è protetto tranne login, icone, manifest e service worker
 // (questi ultimi devono restare leggibili perché la PWA sia installabile — il sw
-// non espone dati, solo la logica di cache).
+// non espone dati, solo la logica di cache). /api/cron ha una sua chiave (CRON_SECRET).
 export const config = {
-  matcher: "/((?!icons/|manifest.webmanifest|sw.js|login|api/login).*)",
+  matcher: "/((?!icons/|manifest.webmanifest|sw.js|login|api/login|api/cron).*)",
 };
 
 const COOKIE = "dash_auth";
