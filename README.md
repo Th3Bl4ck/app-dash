@@ -21,6 +21,12 @@ dashboard di trading XAU / SP500, che si rigenera da sola.
 Le dipendenze pesanti (yfinance/pandas) girano su Actions, non su serverless:
 niente limiti di dimensione e nessuna funzione Python da mantenere.
 
+**Puntualità attesa:** i cron su piano Hobby hanno una *flexible time window*
+di un'ora, quindi il giro parte entro 60 minuti dall'orario indicato (il giro
+del mattino arriva tra le 07:58 e le 08:58). Verificato il 30/07/2026: l'innesco
+manuale ha fatto partire il workflow in ~15 secondi. Per la precisione al minuto
+servirebbe il piano Pro, o un cron esterno (es. Cloudflare Workers).
+
 **Perché l'innesco arriva da Vercel e non dal cron di Actions:** lo scheduler di
 GitHub non è puntuale. Misurato dal 27 al 29/07/2026: il giro del mattino
 (~06:00 UTC, la fascia più congestionata) è stato **scartato tutte le volte**,
